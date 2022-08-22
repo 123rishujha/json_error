@@ -1,0 +1,128 @@
+<html>
+
+<head>
+  <title>Web20-C4</title>
+  <style>
+    #navbar{
+         text-align: center;
+      }
+      #navbar > div{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        background-color: teal;
+      }
+      a{
+        text-decoration: none;
+        color: white;
+      }
+      h1{
+        text-align: center;
+      }
+      table{
+        text-align: center;
+        margin: auto;
+      }
+      tbody{
+        text-align: center;
+        background-color: rgb(94, 162, 155);
+      }
+      tr,th{
+        text-align: center;
+      }
+  </style>
+</head>
+
+<body>
+  <div id="navbar">
+    <h2>Masai Library</h2>
+    <div>
+      <a href="./index.html">
+        <h2>Home</h2>
+      </a>
+      <a href="./dashboard.html">
+        <h2>Dashboard</h2>
+      </a>
+      <a href="./buy.html">
+        <h2>My Books</h2>
+      </a>
+      <a href="./bookmark.html">
+        <h2>Bookmark</h2>
+      </a>
+    </div>
+  </div>
+  <select id="filter">
+    <option value="">Select Category</option>
+    <option value="Fiction">Fiction</option>
+    <option value="Self Help">Self Help</option>
+    <option value="Finance">Finance</option>
+  </select>
+  <h1>Total Books:- <span id="book-count">0</span></h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Description</th>
+        <th>Added Date</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Buy</th>
+        <th>Bookmark</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Append your data here  -->
+    </tbody>
+  </table>
+</body>
+
+</html>
+<script>
+  let book_arr = JSON.parse(localStorage.getItem("book-list"));
+
+  My_book(book_arr);
+  let buy_arr = JSON.parse(localStorage.getItem("buy-list")) || [];
+  let bookmark_arr = JSON.parse(localStorage.getItem("bookmark-list")) || [];
+  function My_book(book_arr){
+    book_arr.forEach(function(elem,i){
+      let tr = document.createElement("tr");
+      let td1 = document.createElement("td");
+      td1.innerText = elem.name;
+      let td2 = document.createElement("td");
+      td2.innerText = elem.author;
+      let td3 = document.createElement("td");
+      td3.innerText = elem.desc;
+      let td4 = document.createElement("td");
+      td4.innerText = elem.date;
+      let td5 = document.createElement("td");
+      td5.innerText = elem.category;
+      let td6 = document.createElement("td");
+      td6.innerText = elem.price;
+      let td7 = document.createElement("td");
+      td7.innerText = "Buy"
+      td7.style.backgroundColor = 'green';
+      td7.style.cursor = "pointer"
+      td7.addEventListener("click",function(event){
+        buy_arr.push(elem);
+        localStorage.setItem("buy-list",JSON.stringify(buy_arr));
+        event.target.parentNode.remove();
+        book_arr.splice(i,1);
+        localStorage.setItem("book-list",book_arr);
+      });
+      let td8 = document.createElement("td");
+      td8.innerText = "Add"
+      td8.style.backgroundColor = "red";
+      td8.style.cursor = "pointer"
+      td8.addEventListener("click",function(event){
+        bookmark_arr.push(elem);
+        localStorage.setItem("bookmark-list",JSON.stringify(bookmark_arr));
+        event.target.parentNode.remove();
+        book_arr.splice(i,1);
+        localStorage.setItem("book-list",book_arr);
+      });
+      tr.append(td1,td2,td3,td4,td5,td6,td7,td8);
+      document.querySelector("tbody").append(tr);
+    })
+  }
+</script>

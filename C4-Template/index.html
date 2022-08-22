@@ -1,0 +1,98 @@
+<html>
+  <head>
+    <title>Web20-C4</title>
+    <!-- //<link rel="stylesheet" href="navbar.css"> -->
+    <style>
+      #navbar{
+         text-align: center;
+      }
+      #navbar > div{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        background-color: teal;
+      }
+      a{
+        text-decoration: none;
+        color: white;
+      }
+      h1{
+        text-align: center;
+      }
+      #create{
+        width: 50%;
+        margin: auto;
+        /* border: 1px solid red; */
+      }
+      form{
+        display: flex;
+        flex-direction: column;
+      }
+      input,select{
+        height: 50px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="navbar">
+      <h2>Masai Library</h2>
+      <div>
+        <a href="./index.html">
+          <h2>Home</h2>
+        </a>
+        <a href="./dashboard.html">
+          <h2>Dashboard</h2>
+        </a>
+        <a href="./buy.html">
+          <h2>My Books</h2>
+        </a>
+        <a href="./bookmark.html">
+          <h2>Bookmark</h2>
+        </a>
+      </div>
+    </div>
+    <div id="create">
+      <h1>Library Management System</h1>
+      <form>
+        <input id="name" placeholder="Book Name" type="text" />
+        <input id="author" placeholder="Author Name" type="text" />
+        <input id="desc" placeholder="Book Description" type="text" />
+        <label for="">Adding Date:-</label>
+        <input type="date" id="added"/>
+        <select id="category">
+          <option value="">Select Category</option>
+          <option value="Fiction">Fiction</option>
+          <option value="Self Help">Self Help</option>
+          <option value="Finance">Finance</option>
+        </select>
+        <input id="price" placeholder="Book's Price" type="number" />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>
+<script>
+  document.querySelector("form").addEventListener("submit",getdata);
+  let obj_arr = JSON.parse(localStorage.getItem("book-list")) || [];
+  function getdata(event){
+    event.preventDefault();
+    let name = document.querySelector("#name").value;
+    let author = document.querySelector("#author").value;
+    let desc = document.querySelector("#desc").value;
+    let date = document.querySelector("#added").value;
+    let category= document.querySelector("#category").value;
+    let price= document.querySelector("#price").value;
+    let obj = {
+      name,
+      author,
+      desc,
+      date,
+      category,
+      price,
+    };
+    obj_arr.push(obj);
+    localStorage.setItem("book-list",JSON.stringify(obj_arr));
+  }
+ 
+</script>
